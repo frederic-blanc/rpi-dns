@@ -53,14 +53,14 @@
     mode: '0755'
   become: true
   
-- name: start service unbound if not
+- name: restart service unbound on change
   systemd:
     state: restarted
     name:  unbound
   when: root_dns.changed or unbound_conf.changed or static_routes_conf.changed
   become: true
   
-- name: restart service unbound
+- name: start service unbound
   systemd:
     state: started
     enabled: true
