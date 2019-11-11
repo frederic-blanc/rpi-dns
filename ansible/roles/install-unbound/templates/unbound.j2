@@ -1,0 +1,54 @@
+server:
+verbosity: 1
+interface: 0.0.0.0
+
+port:   {{ dns_port }}
+do-ip4: yes
+do-ip6: no
+do-udp: yes
+do-tcp: yes
+
+access-control: {{ network_mask }}  allow
+access-control: 127.0.0.0/8     allow
+access-control: 0.0.0.0/0       refuse
+
+root-hints:             "/var/lib/unbound/root.hints"
+
+use-syslog: no
+# to log elsewhere, set 'use-syslog' to 'no', and set the log file location below:
+logfile: "/var/log/unbound/unbound.log"
+log-time-ascii: yes
+
+# Trust glue only if it is within the servers authority
+harden-glue: yes
+# Require DNSSEC data for trust-anchored zones, if such data is absent, the zone becomes BOGUS
+harden-dnssec-stripped: yes
+
+# enable to not answer id.server and hostname.bind queries. 
+hide-identity: yes
+# enable to not answer version.server and version.bind queries. 
+hide-version: yes
+
+# Don't use Capitalization randomization as it known to cause DNSSEC issues sometimes
+# see https://discourse.pi-hole.net/t/unbound-stubby-or-dnscrypt-proxy/9378 for further details
+use-caps-for-id: no
+
+# Reduce EDNS reassembly buffer size.
+# Suggested by the unbound man page to reduce fragmentation reassembly problems
+edns-buffer-size: 1472
+
+# Perform prefetching of close to expired message cache entries
+# This only applies to domains that have been frequently queried
+prefetch: yes
+
+# One thread should be sufficient, can be increased on beefy machines. In reality for most users running on small networks or on a single machine it should be unnecessary to seek performance enhancement by increasing num-threads above 1.
+num-threads: 2
+
+# Ensure kernel buffer is large enough to not lose messages in traffic spikes
+so-rcvbuf: 10m
+
+val-clean-additional: yes
+val-sig-skew-min: 3600
+val-sig-skew-max: 86400
+val-bogus-ttl: 60
+val-log-level: 1

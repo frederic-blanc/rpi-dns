@@ -1,0 +1,13 @@
+---
+- name: prepare server
+  hosts: all
+  roles:
+  - prepare-network
+  - prepare-system
+  - prepare-users
+  
+- name: lock pi account
+  hosts: all
+  roles:
+  - lock-pi-user
+  

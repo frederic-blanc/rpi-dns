@@ -1,0 +1,57 @@
+---
+private_domain:
+  name: "yggdrasil.local"
+  static_routes:
+  - name: sandbox.yggdrasil.local
+    ip:   192.168.1.20
+  - name: k8s-master.yggdrasil.local
+    ip:   192.168.1.21
+  - name: k8s-worker-1.yggdrasil.local
+    ip:   192.168.1.22
+  - name: k8s-worker-2.yggdrasil.local
+    ip:   192.168.1.23
+  - name: k8s-dashboard.yggdrasil.local
+    ip:   192.168.1.21
+  - name: k8s-registry.yggdrasil.local
+    ip:   192.168.1.21
+
+fqdn: "{{ hostname }}.{{ private_domain.name }}"
+
+gateway:        "192.168.1.1"
+network_mask:   "192.168.1.0/24"
+dns_bootstrap:  "192.168.1.1"
+
+dns_port:       53
+
+timezone:       "Europe/Paris"
+
+#to define if on pi4
+#pi4_firmware:
+#  archive: 'vl805_update_0137ab.zip'
+#  new_bin: 'vl805_fw_0137ab.bin'
+#  old_bin: 'vl805_fw_013701.bin'
+
+useful_tools:
+- vim
+- htop
+- tree
+- dnsutils
+- dos2unix
+
+# users and passwords should be defined in a vault or a plain text file or just here as follow:
+#####################################
+# work_users:
+# - name: 'frederic'
+#   password: 'my_password'
+#
+# root_password: 'my_root_password'
+#
+# password_salt: 'my_password_salt'
+#####################################
+# You can generate a salt with the following shell command:
+# cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w ${1:-32} | head -n 1
+
+prompts:
+  user: '\[\033[38;5;22m\]\u@\h:\[$(tput sgr0)\]\[\033[38;5;3m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\\$ \[$(tput sgr0)\]'
+  root: '\[\033[38;5;1m\]\u@\h:\[$(tput sgr0)\]\[\033[38;5;27m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\\$ \[$(tput sgr0)\]'
+  

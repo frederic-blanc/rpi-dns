@@ -1,0 +1,82 @@
+---
+- name: Update and upgrade apt packages
+  apt:
+    upgrade: dist
+    update_cache: yes
+    autoremove:   yes
+    force_apt_get: yes
+  become: true
+  
+- name: install unbound package and its dependencies
+  apt:
+    name: "unbound"
+    force_apt_get: yes
+  become: true
+  
+- name: download latest root DNS
+  get_url:
+    url: https://www.internic.net/domain/named.root
+    dest: /var/lib/unbound/root.hints
+    owner: unbound
+    group: unbound
+    mode: '0644'
+    force: true
+  register: root_dns
+  become: true
+  
+- name: copy unbound conf
+  template:
+    src:   unbound.j2
+    dest:  /etc/unbound/unbound.conf.d/unbound.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: unbound_conf
+  become: true
+  
+- name: copy static_routes conf
+  template:
+    src:   static_routes.j2
+    dest:  /etc/unbound/unbound.conf.d/static_routes.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: static_routes_conf
+  become: true
+  
+- name: create logs folder
+  file:
+    path: /var/log/unbound
+    state: directory
+    owner: unbound
+    group: unbound
+    mode: '0755'
+  become: true
+  
+- name: start service unbound if not
+  systemd:
+    state: restarted
+    name:  unbound
+  when: root_dns.changed or unbound_conf.changed or static_routes_conf.changed
+  become: true
+  
+- name: restart service unbound
+  systemd:
+    state: started
+    enabled: true
+    name:  unbound
+  become: true
+  
+- name: set local domain_name_servers to localhost
+  lineinfile:
+    path: /etc/dhcpcd.conf
+    regexp: '^static\s+domain_name_servers=.*$'
+    line: "static    domain_name_servers=127.0.0.1"
+  register: domain_name_servers
+  become: true
+  
+- name: reboot on change
+  reboot:
+  when: domain_name_servers.changed
+  become: true
+  

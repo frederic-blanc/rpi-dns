@@ -1,0 +1,6 @@
+---
+- name: install dns server
+  hosts: all
+  roles:
+  - install-unbound
+  
