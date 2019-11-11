@@ -1,6 +1,6 @@
 A simple way to set a local DNS server for you local network, to bypass restriction and disable all DNS injection from your internet provider DNS. As well as configure your netwoork local domain resolution.
 
-#To use: 
+# To use: 
 1. prepare the microSD card
    Simply flash the raspbian:buster image on a memorystick, *a /boot partion is visible even on windows after the image flashing*.
    * add a content less file on the */boot* partition with name *ssh*
