@@ -1,6 +1,6 @@
 A simple way to set a local DNS server for you local network, to bypass restriction and disable all DNS injection from your internet provider DNS. As well as configure your netwoork local domain resolution.
 
-To use: 
+#To use: 
 1. prepare the microSD card
    Simply flash the raspbian:buster image on a memorystick, *a /boot partion is visible even on windows after the image flashing*.
    * add a content less file on the */boot* partition with name *ssh*
@@ -32,3 +32,5 @@ To use:
      ansible-playbook -vv prepare-dns-server.yml  -i inventory.ini --extra-vars 'ansible_user=pi ansible_ssh_pass=raspberry ansible_sudo_pass=raspberry'
      ansible-playbook -vv install-dns-server.yml  -i inventory.ini --extra-vars 'ansible_user=<WORK_USER> ansible_ssh_pass=<WORK_USER_PASSWORD> ansible_sudo_pass=<WORK_USER_PASSWORD>'
      ```
+4. configure your computers to use your new DNS.
+   
