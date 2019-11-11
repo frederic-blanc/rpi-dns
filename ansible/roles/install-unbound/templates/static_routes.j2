@@ -1,8 +1,9 @@
 server:
-
-local-zone:     "{{ private_domain.name }}" static
-
-local-data:     "{{ fqdn }}          IN A {{ ansible_default_ipv4.address }}"
+    
+    local-zone:     "{{ private_domain.name }}" static
+    
+    local-data:     "{{ fqdn }}          IN A {{ ansible_default_ipv4.address }}"
 {% for static_route in private_domain.static_routes %}
-local-data:     "{{ static_route.name }}    IN A {{ static_route.ip }}"
+    local-data:     "{{ static_route.name }}    IN A {{ static_route.ip }}"
 {% endfor %}
+    

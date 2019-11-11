@@ -53,11 +53,18 @@
     mode: '0755'
   become: true
   
-- name: restart service unbound on change
+- name: restart service unbound on root DNS change
   systemd:
     state: restarted
     name:  unbound
-  when: root_dns.changed or unbound_conf.changed or static_routes_conf.changed
+  when: root_dns.changed
+  become: true
+  
+- name: reload service unbound on config change
+  systemd:
+    state: reloaded
+    name:  unbound
+  when: not root_dns.changed and ( unbound_conf.changed or static_routes_conf.changed )
   become: true
   
 - name: start service unbound
@@ -65,6 +72,7 @@
     state: started
     enabled: true
     name:  unbound
+  when: not root_dns.changed
   become: true
   
 - name: set local domain_name_servers to localhost
