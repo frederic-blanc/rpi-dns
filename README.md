@@ -14,7 +14,7 @@ A simple way to set a local DNS server for you local network, to bypass restrict
    * Install git and ansible
      E.g. for ubuntu or debian:
      ```bash
-     sudo apt-get update && sudo apt-get-upgrade -y
+     sudo apt-get update && sudo apt-get upgrade -y
      sudo apt-get install ansible git -y 
      sudo pip install pyOpenSSL
      ```
