@@ -18,37 +18,3 @@
     name: "{{ timezone }}"
   become: true
   
-- name: firmware update for pi4 only
-  block:
-  - name: unarchive firmware files
-    unarchive:
-        src: "{{ pi4_firmware.archive }}"
-        dest: /tmp
-        mode: '0500'
-        exclude: "{{ pi4_firmware.old_bin }}"
-    changed_when: false
-    
-  - name: Check firmware version
-    shell: "/tmp/vl805 -v /tmp/{{ pi4_firmware.new_bin }}"
-    register: firmware_check
-    changed_when: false
-    
-  - name: Update pi4_firmware if needed
-    shell: "/tmp/vl805 -w /tmp/{{ pi4_firmware.new_bin }}"
-    when: firmware_check.rc != 0
-    
-  - name: remove firmware files
-    file: 
-        path: "{{ item }}"
-        state: absent
-    with_items:
-    - vl805
-    - "{{ pi4_firmware.new_bin }}"
-    changed_when: false
-    
-  - name: reboot on change
-    reboot:
-    when: firmware_check.rc != 0
-    
-  when: pi4_firmware is defined
-  

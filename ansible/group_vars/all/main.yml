@@ -12,7 +12,7 @@ private_domain:
     ip:   192.168.1.23
   - name: k8s-dashboard.yggdrasil.local
     ip:   192.168.1.21
-  - name: k8s-registry.yggdrasil.local
+  - name: dockerhub.yggdrasil.local
     ip:   192.168.1.21
 
 fqdn: "{{ hostname }}.{{ private_domain.name }}"
@@ -25,18 +25,16 @@ dns_port:       53
 
 timezone:       "Europe/Paris"
 
-#to define if on pi4
-#pi4_firmware:
-#  archive: 'vl805_update_0137ab.zip'
-#  new_bin: 'vl805_fw_0137ab.bin'
-#  old_bin: 'vl805_fw_013701.bin'
-
 useful_tools:
 - vim
 - htop
 - tree
 - dnsutils
 - dos2unix
+- unzip
+- wget
+- curl
+- net-tools
 
 # users and passwords should be defined in a vault or a plain text file or just here as follow:
 #####################################
