@@ -1,27 +1,11 @@
 ---
-private_domain:
-  name: "yggdrasil.local"
-  static_routes:
-  - name: sandbox.yggdrasil.local
-    ip:   192.168.1.20
-  - name: k8s-master.yggdrasil.local
-    ip:   192.168.1.21
-  - name: k8s-worker-1.yggdrasil.local
-    ip:   192.168.1.22
-  - name: k8s-worker-2.yggdrasil.local
-    ip:   192.168.1.23
-  - name: k8s-dashboard.yggdrasil.local
-    ip:   192.168.1.21
-  - name: dockerhub.yggdrasil.local
-    ip:   192.168.1.21
-
-fqdn: "{{ hostname }}.{{ private_domain.name }}"
+domain_name:    "yggdrasil.local"
+fqdn:           "{{ hostname }}.{{ domain_name }}"
 
 gateway:        "192.168.1.1"
-network_mask:   "192.168.1.0/24"
-dns_bootstrap:  "192.168.1.1"
-
-dns_port:       53
+domain_name_servers:
+- "127.0.0.1"
+- "192.168.1.1"
 
 timezone:       "Europe/Paris"
 
@@ -35,6 +19,9 @@ useful_tools:
 - wget
 - curl
 - net-tools
+- mlocate
+
+firmware_release:   "stable"
 
 # users and passwords should be defined in a vault or a plain text file or just here as follow:
 #####################################
@@ -52,4 +39,22 @@ useful_tools:
 prompts:
   user: '\[\033[38;5;22m\]\u@\h:\[$(tput sgr0)\]\[\033[38;5;3m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\\$ \[$(tput sgr0)\]'
   root: '\[\033[38;5;1m\]\u@\h:\[$(tput sgr0)\]\[\033[38;5;27m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\\$ \[$(tput sgr0)\]'
-  
+
+private_domain:
+  name: "yggdrasil.local"
+  static_routes:
+  - name: sandbox.yggdrasil.local
+    ip:   192.168.1.254
+  - name: k8s-master.yggdrasil.local
+    ip:   192.168.1.21
+  - name: k8s-worker-1.yggdrasil.local
+    ip:   192.168.1.22
+  - name: k8s-worker-2.yggdrasil.local
+    ip:   192.168.1.23
+  - name: k8s-dashboard.yggdrasil.local
+    ip:   192.168.1.21
+  - name: dockerhub.yggdrasil.local
+    ip:   192.168.1.21
+
+dns_port:       53
+network_mask:   "192.168.1.0/24"

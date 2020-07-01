@@ -1,0 +1,14 @@
+---
+- name: prepare node
+  hosts: all
+  roles:
+  - prepare-server/prepare-system
+  - prepare-server/prepare-network
+  - prepare-server/prepare-users
+  - install-unbound
+  
+- name: lock ubuntu account
+  hosts: all
+  roles:
+  - prepare-server/lock-ubuntu-user
+ 
