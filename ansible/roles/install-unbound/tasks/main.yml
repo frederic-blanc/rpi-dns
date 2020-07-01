@@ -46,6 +46,7 @@
     mode:           '0755'
   become:           true
   
+# from https://b4d.sablun.org/blog/2018-09-27-when-unbound-wont-write-logs
 - name: apparmor conf local for unbound log
   copy:
     dest:           "/etc/apparmor.d/local/usr.sbin.unbound"
@@ -72,6 +73,7 @@
   when:             apparmor_for_unbound.changed
   become:           true
   
+# from https://blobfolio.com/2017/05/fix-linux-dns-issues-caused-by-systemd-resolved
 - name: ensure /etc/NetworkManager/conf.d exists
   file:
     dest:           "/etc/NetworkManager/conf.d"
