@@ -1,0 +1,15 @@
+[submodule "ansible/roles/prepare-server/lock-ubuntu-user"]
+	path = ansible/roles/prepare-server/lock-ubuntu-user
+	url = https://github.com/frederic-blanc/rpi-ansible-role_lock-ubuntu-user
+[submodule "ansible/roles/prepare-server/prepare-network"]
+	path = ansible/roles/prepare-server/prepare-network
+	url = https://github.com/frederic-blanc/rpi-ansible-role_prepare-network
+[submodule "ansible/roles/prepare-server/prepare-system"]
+	path = ansible/roles/prepare-server/prepare-system
+	url = https://github.com/frederic-blanc/rpi-ansible-role_prepare-system
+[submodule "ansible/roles/prepare-server/prepare-users"]
+	path = ansible/roles/prepare-server/prepare-users
+	url = https://github.com/frederic-blanc/rpi-ansible-role_prepare-users
+[submodule "ansible/roles/install-unbound"]
+	path = ansible/roles/install-unbound
+	url = https://github.com/frederic-blanc/rpi-ansible-role_install-unbound
